@@ -125,6 +125,14 @@ if __name__ == "__main__":
                 combined.to_csv(combined_path, index=False)
                 print(f"{ups_name} 寫入 {combined_path}，總筆數：{len(combined)}")
 
+                # 🔼 加上這一段：上傳至 Dropbox
+                access_token = refresh_access_token(
+                    refresh_token="BJcWaTN3aMEAAAAAAAAAAbJNwqLLZU0V7X1fXPyKJDNfTpxOfEz8aCxoS_hKPi-s",
+                    client_id="pmnzyptjnq8cqgr",
+                    client_secret="2gdwzbiq3cmh5yw"
+                )
+                upload_to_dropbox(combined_path, access_token)
+
             except Exception as e:
                 print(f"轉換失敗：{e}")
         else:
