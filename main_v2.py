@@ -77,10 +77,9 @@ for ups in ups_targets:
                 combined = df
 
             combined.to_csv(combined_path, index=False)
-            print(f"✅ {ups_name} 寫入 {combined_path}，總筆數：{len(combined)}")
+            print(f"{ups_name} 寫入 {combined_path}，總筆數：{len(combined)}")
 
         except Exception as e:
-            print(f"⚠️  轉換失敗：{e}")
+            print(f"轉換失敗：{e}")
     else:
-        print(f"❌ {ups_name} 下載失敗：狀態碼 {response.status_code}")
-# 
+        print(f"{ups_name} 下載失敗：狀態碼 {response.status_code}")
