@@ -8,7 +8,7 @@ REM 啟用虛擬環境
 call .venv\Scripts\activate.bat
 
 REM 執行主程式
-python upload_to_dropbox.py
+python main_v2.py
 
 REM 停用虛擬環境（可選）
 call .venv\Scripts\deactivate.bat
