@@ -17,6 +17,9 @@ ups_targets = [
 username = "admin"
 password = "misadmin"
 output_dir = "ups_logs"
+
+onelake_path = r"C:\Users\kuose\OneLake - Microsoft\global-IT-DEV\selena_lakehouse.Lakehouse\Files"
+output_dir = os.path.join(onelake_path, "ups_data_all")
 os.makedirs(output_dir, exist_ok=True)
 
 target_date = datetime.today().strftime("%Y%m%d")
@@ -54,6 +57,8 @@ for ups in ups_targets:
             # 欄位標準化
             if ups_type == "standard":
                 df.columns = ["Date", "Time", "Vin", "Vout", "Vbat", "Fin", "Fout", "Load", "Temp"]
+                df["UPS_Name"] = ups_name
+                df["Date"] = pd.to_datetime(df["Date"], errors="coerce").dt.strftime("%Y-%m-%d")
             else:
                 df.columns = ["DateTime", "Vin", "Vout", "Freq", "Load", "Capacity", "Vbat", "CellVolt", "Temp"]
                 df = df.dropna(subset=["DateTime"])
@@ -63,23 +68,25 @@ for ups in ups_targets:
                 df["Fout"] = df["Freq"]
                 df["Temp"] = df["Temp"].str.extract(r"([\d\.]+)").astype(float)
                 df = df[["Date", "Time", "Vin", "Vout", "Vbat", "Fin", "Fout", "Load", "Temp"]]
-
-            df["UPS_Name"] = ups_name
-            df["Date"] = pd.to_datetime(df["Date"], errors="coerce").dt.strftime("%Y-%m-%d")
+                df["UPS_Name"] = ups_name
+                df["Date"] = pd.to_datetime(df["Date"], errors="coerce").dt.strftime("%Y-%m-%d")
 
             # ⬇️ 儲存為 combined 檔案（防重複）
             combined_path = f"{output_dir}/{ups_name}.csv"
             if os.path.exists(combined_path):
+                # 如果已存在，讀取並合併
                 existing = pd.read_csv(combined_path)
                 combined = pd.concat([existing, df], ignore_index=True)
                 combined.drop_duplicates(subset=["Date", "Time", "UPS_Name"], inplace=True)
             else:
+                # 如果不存在，直接使用當前 DataFrame
                 combined = df
 
             combined.to_csv(combined_path, index=False)
-            print(f"{ups_name} 寫入 {combined_path}，總筆數：{len(combined)}")
+            print(f"✅ {ups_name} 寫入 {combined_path}，總筆數：{len(combined)}")
 
         except Exception as e:
-            print(f"轉換失敗：{e}")
+            print(f"⚠️  轉換失敗：{e}")
     else:
-        print(f"{ups_name} 下載失敗：狀態碼 {response.status_code}")
+        print(f"❌ {ups_name} 下載失敗：狀態碼 {response.status_code}")
+# 
