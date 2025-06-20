@@ -18,7 +18,7 @@ username = "admin"
 password = "misadmin"
 output_dir = "ups_logs"
 
-onelake_path = r"C:\Users\kuose\OneLake - Microsoft\global-IT-DEV\selena_lakehouse.Lakehouse\Files"
+onelake_path = r"C:\Users\itdev\OneLake - Microsoft\global-IT-DEV\selena_lakehouse.Lakehouse\Files"
 output_dir = os.path.join(onelake_path, "ups_data_all")
 os.makedirs(output_dir, exist_ok=True)
 
