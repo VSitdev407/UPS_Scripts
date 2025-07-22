@@ -13,8 +13,8 @@ output_dir = "ups_logs"
 os.makedirs(output_dir, exist_ok=True)
 
 # 設定時間範圍
-start_date = datetime.strptime("2025-07-16", "%Y-%m-%d")
-end_date = datetime.strptime("2025-07-20", "%Y-%m-%d")
+start_date = datetime.strptime("2025-07-20", "%Y-%m-%d")
+end_date = datetime.strptime("2025-07-21", "%Y-%m-%d")
 date_list = [(start_date + timedelta(days=i)).strftime("%Y%m%d")
              for i in range((end_date - start_date).days + 1)]
 
@@ -29,7 +29,7 @@ for target_date in date_list:
     refresh_url = f"http://{ip}/refresh_data.cgi"
     download_url = f"http://{ip}/download.cgi"
     headers = {"User-Agent": "Mozilla/5.0", "Referer": f"http://{ip}"}
-    form_data = {"$data_date": target_date}
+    form_data = {"data_date": target_date}
 
     try:
         session.get(refresh_url, params={"data_date": target_date})
