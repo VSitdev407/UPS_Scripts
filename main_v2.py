@@ -44,7 +44,7 @@ for ups in ups_targets:
         else:
             session.get(f"http://{ip}/refresh_data.cgi", params={"data_date": target_date}, timeout=10)
             url = f"http://{ip}/download.cgi"
-            form_data = {"$data_date": target_date}
+            form_data = {"data_date": target_date}
 
         headers = {
             "User-Agent": "Mozilla/5.0",
