@@ -31,7 +31,7 @@ for ups in ups_targets:
     ups_name = ups["name"]
     ip = ups["ip"]
     ups_type = ups["type"]
-    print(f"\U0001f4f1 正在下載 {ups_name} 的資料...")
+    print(f"正在下載 {ups_name} 的資料...")
 
     try:
         session = requests.Session()
