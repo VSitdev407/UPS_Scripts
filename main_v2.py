@@ -11,7 +11,7 @@ ups_targets = [
     {"name": "UPS_7F", "ip": "172.21.6.10", "type": "standard"},
     {"name": "UPS_8F", "ip": "172.21.4.10", "type": "standard"},
     {"name": "UPS_9F", "ip": "172.21.3.11", "type": "standard"},
-    {"name": "UPS_10F", "ip": "172.21.2.13", "type": "new"}  # 特別處理
+   # {"name": "UPS_10F", "ip": "172.21.2.13", "type": "new"}  # 特別處理
 ]
 
 username = "admin"
@@ -41,11 +41,14 @@ for ups in ups_targets:
             session.get(f"http://{ip}", timeout=10)
             url = f"http://{ip}/cgi-bin/datalog.csv?page=421&"
             form_data = {"GETDATFILE": "Download"}
+
+            '''
         else:
             session.get(f"http://{ip}/refresh_data.cgi", params={"data_date": target_date}, timeout=10)
             url = f"http://{ip}/download.cgi"
             form_data = {"data_date": target_date}
-
+        '''
+            
         headers = {
             "User-Agent": "Mozilla/5.0",
             "Referer": f"http://{ip}"
@@ -60,6 +63,7 @@ for ups in ups_targets:
             # 欄位標準化
             if ups_type == "standard":
                 df.columns = ["Date", "Time", "Vin", "Vout", "Vbat", "Fin", "Fout", "Load", "Temp"]
+            '''
             else:
                 df.columns = ["DateTime", "Vin", "Vout", "Freq", "Load", "Capacity", "Vbat", "CellVolt", "Temp"]
                 df = df.dropna(subset=["DateTime"])
@@ -69,7 +73,8 @@ for ups in ups_targets:
                 df["Fout"] = df["Freq"]
                 df["Temp"] = df["Temp"].str.extract(r"([\d\.]+)").astype(float)
                 df = df[["Date", "Time", "Vin", "Vout", "Vbat", "Fin", "Fout", "Load", "Temp"]]
-
+            '''
+            
             df["UPS_Name"] = ups_name
             df["Date"] = pd.to_datetime(df["Date"], errors="coerce").dt.strftime("%Y-%m-%d")
 
