@@ -62,18 +62,7 @@ for ups in ups_targets:
 
             # 欄位標準化
             if ups_type == "standard":
-                df.columns = ["Date", "Time", "Vin", "Vout", "Vbat", "Fin", "Fout", "Load", "Temp"]
-            '''
-            else:
-                df.columns = ["DateTime", "Vin", "Vout", "Freq", "Load", "Capacity", "Vbat", "CellVolt", "Temp"]
-                df = df.dropna(subset=["DateTime"])
-                df[["Date", "Time"]] = df["DateTime"].str.strip().str.split(" ", expand=True, n=1)
-                df.drop(columns=["DateTime", "Capacity", "CellVolt"], inplace=True)
-                df["Fin"] = df["Freq"]
-                df["Fout"] = df["Freq"]
-                df["Temp"] = df["Temp"].str.extract(r"([\d\.]+)").astype(float)
-                df = df[["Date", "Time", "Vin", "Vout", "Vbat", "Fin", "Fout", "Load", "Temp"]]
-            '''
+                df.columns = ["Date", "Time", "Vin", "Vout", "Vbat", "Fin", "Fout", "Load", "Temp"] 
             
             df["UPS_Name"] = ups_name
             df["Date"] = pd.to_datetime(df["Date"], errors="coerce").dt.strftime("%Y-%m-%d")
