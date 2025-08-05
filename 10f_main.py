@@ -27,6 +27,7 @@ target_date = datetime.today().strftime("%Y%m%d")
 # 儲存路徑
 
 onelake_path = r"C:\\Users\\itdev\\OneLake - Microsoft\\global-IT-DEV\\selena_lakehouse.Lakehouse\\Files"
+tst_path = r"E:\\UPS_Scripts\\ups_logs"
 
 output_dir = os.path.join(onelake_path, "ups_data_all")
 
