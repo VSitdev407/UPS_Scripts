@@ -27,13 +27,16 @@ target_date = datetime.today().strftime("%Y%m%d")
 # 儲存路徑
 
 onelake_path = r"C:\\Users\\itdev\\OneLake - Microsoft\\global-IT-DEV\\selena_lakehouse.Lakehouse\\Files"
-tst_path = r"E:\\UPS_Scripts\\ups_logs"
+tst_path = r"E:\\UPS_Scripts"
 
 output_dir = os.path.join(onelake_path, "ups_data_all")
+tst_output_dir = os.path.join(tst_path, "ups_logs")
 
 os.makedirs(output_dir, exist_ok=True)
+os.makedirs(tst_output_dir, exist_ok=True)
 
 output_file = os.path.join(output_dir, f"{ups_name}.csv")
+tst_file = os.path.join(tst_output_dir, f"{ups_name}.csv")
  
 # 建立 session 並登入
 
@@ -118,8 +121,10 @@ try:
             combined = df
  
         combined.to_csv(output_file, index=False)
+        combined.to_csv(tst_file, index=False)
 
         print(f"✅ 資料寫入成功：{output_file}，總筆數：{len(combined)}")
+        print(f"✅ 資料寫入成功：{tst_file}，總筆數：{len(combined)}")
  
     else:
 
