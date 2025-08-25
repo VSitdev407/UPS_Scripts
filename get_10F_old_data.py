@@ -13,8 +13,8 @@ output_dir = "ups_logs"
 os.makedirs(output_dir, exist_ok=True)
 
 # 設定時間範圍
-start_date = datetime.strptime("2025-08-18", "%Y-%m-%d")
-end_date = datetime.strptime("2025-08-20", "%Y-%m-%d")
+start_date = datetime.strptime("2025-08-20", "%Y-%m-%d")
+end_date = datetime.strptime("2025-08-24", "%Y-%m-%d")
 date_list = [(start_date + timedelta(days=i)).strftime("%Y%m%d")
              for i in range((end_date - start_date).days + 1)]
 
